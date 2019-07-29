@@ -1,4 +1,4 @@
-var send_form = function(form, event){
+var send_form = function(form, event, url){
     event.preventDefault();
     var serializeDados = form.serialize();
     var btn = form.find("input[type='submit']");
@@ -7,7 +7,7 @@ var send_form = function(form, event){
     console.log("serializeDados: "+serializeDados);
      
     $.ajax({
-        url: 'http://localhost/lickslegal/mailchimp/index.php',
+        url: url,
         dataType: 'html',
         type: 'POST',
         data: serializeDados,
@@ -60,12 +60,12 @@ Webflow.push(function(){
   // news form
     $('form[name="wf-form-newsletter"]').submit(function(event) {
         var form = $(this);
-        send_form(form, event);
+        send_form(form, event, 'http://localhost/lickslegal/mailchimp/index.php');
     });
 
   // work-with-us form
   $('form[name="wf-form-work-with-us"]').submit(function(event) {
       var form = $(this);
-      send_form(form, event);
+      send_form(form, event, 'http://localhost/lickslegal/work-with-us/index.php');
   })
 });
