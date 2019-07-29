@@ -53,6 +53,10 @@ var send_form = function(form, event){
 
 
 Webflow.push(function(){
+  if(page_is('work-with-us')) {
+    $('form[name="wf-form-work-with-us"]').attr('multipart/form-data');
+  }
+
   // news form
     $('form[name="wf-form-newsletter"]').submit(function(event) {
         var form = $(this);
@@ -60,4 +64,8 @@ Webflow.push(function(){
     });
 
   // work-with-us form
+  $('form[name="wf-form-work-with-us"]').submit(function(event) {
+      var form = $(this);
+      send_form(form, event);
+  })
 });
