@@ -54,7 +54,7 @@ var send_form = function(form, event, url){
 
 Webflow.push(function(){
   if(page_is('work-with-us')) {
-    $('form[name="wf-form-work-with-us"]').attr('multipart/form-data');
+    $('form[name="wf-form-work-with-us"]').attr('enctype', 'multipart/form-data');
   }
 
   // news form
