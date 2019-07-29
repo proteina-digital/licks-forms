@@ -60,7 +60,7 @@ Webflow.push(function(){
   // news form
     $('form[name="wf-form-newsletter"]').submit(function(event) {
         var form = $(this);
-        send_form(form, event, 'https://static.lickslegal.com/mailchimp');
+        send_form(form, event, 'http://static.lickslegal.com/mailchimp/index.php');
     });
 
   // work-with-us form
