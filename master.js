@@ -42,8 +42,6 @@ var send_form = function(form, event, url){
             erros.push("Erro no Servidor");
           }
 
-
-
           form.parent("div").find('.w-form-fail').html("<p>"+erros[0]+"</p>");
           form.parent("div").find('.w-form-fail').slideDown();
           btn.val("Subscribe");
@@ -64,32 +62,36 @@ Webflow.push(function(){
   });
 
   // // work-with-us form
-  // $('form[name="wf-form-work-with-us"]').submit(function(event) {
-  //   var form = $(this);
-  //   send_form_file(form, event, 'http://localhost/lickslegal/work-with-us/index.php');
-  // });
-
-
   const work_form = document.querySelector('form[name="wf-form-work-with-us"]');
   const inpFile = document.querySelector('#cv');
-  
-  work_form.addEventListener("submit", event => {
-      event.preventDefault();
-  
-      console.log(work_form);
-      const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
-      var data = serialize(work_form);
-      const formData = new FormData();
-  
-      formData.append("inpFile", inpFile.files[0]);
-      formData.append(data);
-      console.log(data);
-      console.log(formData);
-  
-      fetch(endpoint, {
-          method: 'post',
-          body: formData
-      }).catch(console.error);
-  });
+
+    work_form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        console.log(work_form);
+        // const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
+        const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
+        const formData = new FormData();
+
+        formData.append("inpFile", inpFile.files[0]);
+        formData.append("name", work_form.querySelector('input[name="name"]').val);
+        formData.append("email", work_form.querySelector('input[name="email"]').val);
+        formData.append("tel", work_form.querySelector('input[name="tel"]').val);
+        formData.append("position", work_form.querySelector('select[name="position"]').val);
+        formData.append("message", work_form.querySelector('textarea[name="message"]').val);
+
+        fetch(endpoint, {
+            method: 'post',
+            body: formData
+        }).then(function(response) {
+            if (response.status >= 200 && response.status < 300) {
+                return response.text()
+            }
+            throw new Error(response.statusText)
+        })
+        .then(function(response) {
+            console.log(response);
+        }).catch(console.error);
+    });
 
 });
