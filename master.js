@@ -61,20 +61,21 @@ Webflow.push(function() {
                 method: 'post',
                 body: formData
             }).then(function(response) {
-
+                form = $('form[name="wf-form-work-with-us"]');
                 if (response.status >= 200) {
-                  return response.text();
-                  work_form.style.display('none');
-                  document.querySelector('.w-form-done').style.display('block');
-                  document.querySelector('.w-form-fail').style.display('none');
+                  form.hide();
+                  form.parent("div").find('.w-form-done').slideDown();
+                  form.parent("div").find('.w-form-fail').hide();
 
+                  return response.text();
+                  
                 } else {
-                  document.querySelector('.w-form-fail').textContent('Something went wrong...');
-                  document.querySelector('.w-form-fail').style.display('block');
+                  form.parent("div").find('.w-form-fail').html("Something went wrong...");
+                  form.parent("div").find('.w-form-fail').slideDown();
                 }
                 //throw new Error(response.statusText);
             }).then(function(response) {
-                console.log(response);       
+                console.log(response);    
             }).catch(console.error);
         });
     }
