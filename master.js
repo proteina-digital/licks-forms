@@ -41,37 +41,38 @@ var send_form = function(form, event, url) {
 Webflow.push(function() {
     if (page_is('work-with-us')) {
         $('form[name="wf-form-work-with-us"]').attr('enctype', 'multipart/form-data');
+
+        const work_form = document.querySelector('form[name="wf-form-work-with-us"]');
+        const inpFile = document.querySelector('#cv');
+        work_form.addEventListener("submit", event => {
+            event.preventDefault();
+            // const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
+            const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
+            const formData = new FormData();
+            formData.append("inpFile", inpFile.files[0]);
+            formData.append("name", work_form.querySelector('input[name="name"]').value);
+            formData.append("email", work_form.querySelector('input[name="email"]').value);
+            formData.append("tel", work_form.querySelector('input[name="tel"]').value);
+            formData.append("position", work_form.querySelector('select[name="position"]').value);
+            formData.append("message", work_form.querySelector('textarea[name="message"]').value);
+
+
+            fetch(endpoint, {
+                method: 'post',
+                body: formData
+            }).then(function(response) {
+                if (response.status >= 200) {
+                    return response.text();
+                }
+                //throw new Error(response.statusText);
+            }).then(function(response) {
+                console.log(response);
+            }).catch(console.error);
+        });
     }
     $('form[name="wf-form-newsletter"]').submit(function(event) {
         var form = $(this);
         send_form(form, event, 'http://static.lickslegal.com/mailchimp/index.php');
     });
-    const work_form = document.querySelector('form[name="wf-form-work-with-us"]');
-    const inpFile = document.querySelector('#cv');
-    work_form.addEventListener("submit", event => {
-        event.preventDefault();
-        console.log(work_form);
-        // const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
-        const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
-        const formData = new FormData();
-        formData.append("inpFile", inpFile.files[0]);
-        formData.append("name", work_form.querySelector('input[name="name"]').value);
-        formData.append("email", work_form.querySelector('input[name="email"]').value);
-        formData.append("tel", work_form.querySelector('input[name="tel"]').value);
-        formData.append("position", work_form.querySelector('select[name="position"]').value);
-        formData.append("message", work_form.querySelector('textarea[name="message"]').value);
-
-
-        fetch(endpoint, {
-            method: 'post',
-            body: formData
-        }).then(function(response) {
-            if (response.status >= 200) {
-                return response.text();
-            }
-            //throw new Error(response.statusText);
-        }).then(function(response) {
-            console.log(response);
-        }).catch(console.error);
-    });
+    
 });
