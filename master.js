@@ -46,6 +46,10 @@ Webflow.push(function() {
         const inpFile = document.querySelector('#cv');
         work_form.addEventListener("submit", event => {
             event.preventDefault();
+
+            var btn = $('form[name="wf-form-work-with-us"]').find("input[type='submit']");
+            btn.val("SENDING...");
+
             // const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
             const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
             const formData = new FormData();
@@ -72,6 +76,7 @@ Webflow.push(function() {
                 } else {
                   form.parent("div").find('.w-form-fail').html("Something went wrong...");
                   form.parent("div").find('.w-form-fail').slideDown();
+                  btn.val('SUBMIT');
                 }
                 //throw new Error(response.statusText);
             }).then(function(response) {
