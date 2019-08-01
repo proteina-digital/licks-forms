@@ -61,8 +61,16 @@ Webflow.push(function() {
                 method: 'post',
                 body: formData
             }).then(function(response) {
+                form = $('form[name="wf-form-work-with-us"]');
+
                 if (response.status >= 200) {
                     return response.text();
+                    form.parent("div").find('.w-form-done').slideDown();
+                    form.parent("div").find('.w-form-fail').hide();
+                    form.hide();
+                } else {
+                  form.parent("div").find('.w-form-fail').html('Something went wrong...');
+                  form.parent("div").find('.w-form-fail').slideDown();
                 }
                 //throw new Error(response.statusText);
             }).then(function(response) {
