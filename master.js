@@ -1,3 +1,15 @@
+function check_recaptcha() {
+    if(grecaptcha && grecaptcha.getResponse().length > 0) {
+        return;
+    }
+    else {
+        //The recaptcha is not cheched
+        //You can display an error message here
+        alert('Please confirm you’re not a robot.');
+    }
+}
+
+
 var send_form = function(form, event, url) {
     event.preventDefault();
     var serializeDados = form.serialize();
@@ -47,11 +59,21 @@ Webflow.push(function() {
         work_form.addEventListener("submit", event => {
             event.preventDefault();
 
+            if(grecaptcha && grecaptcha.getResponse().length > 0) {
+                
+            }
+            else {
+                //The recaptcha is not cheched
+                //You can display an error message here
+                alert('Please confirm you’re not a robot.');
+                return false;
+            }
+
             var btn = $('form[name="wf-form-work-with-us"]').find("input[type='submit']");
             btn.val("SENDING...");
 
-            // const endpoint = 'http://localhost/lickslegal/work-with-us/index.php';
             const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
+            // const endpoint = 'http://static.lickslegal.com/work-with-us/teste.php';
             const formData = new FormData();
             formData.append("inpFile", inpFile.files[0]);
             formData.append("name", work_form.querySelector('input[name="name"]').value);
