@@ -72,8 +72,8 @@ Webflow.push(function() {
             var btn = $('form[name="wf-form-work-with-us"]').find("input[type='submit']");
             btn.val("SENDING...");
 
-            const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
-            // const endpoint = 'http://static.lickslegal.com/work-with-us/teste.php';
+            const endpoint = 'https://formularios.proteina.digital/licks/work-with-us/index.php';
+            // const endpoint = 'http://static.lickslegal.com/work-with-us/index.php';
             const formData = new FormData();
             formData.append("inpFile", inpFile.files[0]);
             formData.append("name", work_form.querySelector('input[name="name"]').value);
@@ -108,7 +108,8 @@ Webflow.push(function() {
     }
     $('form[name="wf-form-newsletter"]').submit(function(event) {
         var form = $(this);
-        send_form(form, event, 'http://static.lickslegal.com/mailchimp/index.php');
+        send_form(form, event, 'https://formularios.proteina.digital/licks/mailchimp/index.php');
+        // send_form(form, event, 'http://static.lickslegal.com/mailchimp/index.php');
     });
     
 });
